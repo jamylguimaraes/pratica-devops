@@ -30,28 +30,7 @@ Toda a solução é orquestrada por Docker Compose, seguindo boas práticas de s
 
 ## 2. Arquitetura (HLD)
 
-
-+-------------------+        +-------------------+        +-----------------------+
-| ViaIPE API        | -----> | Collector (Python)| -----> | InfluxDB 1.x (TS DB)  |
-| (Consulta LAT/UP) |        | (Agente de Coleta)|        | (Armazenamento Métr.) |
-+-------------------+        +-------------------+        +-----------------------+
-                                     |                           ^
-                                     |                           |
-                                     |                           |
-                                     +---------(internet)--------+
-                                             Métricas / POST
-                          
-                          +-------------------+
-                          | Grafana (UI)      |
-                          | Dashboards / Alerta|
-                          +-------------------+
-                                   |
-                                   v
-                      +-----------------------------+
-                      | Equipe de Monitoramento     |
-                      | (Visualização & Ação)       |
-                      +-----------------------------+
-
+![HDL](https://github.com/jamylguimaraes/pratica-devops/blob/main/Questao-2/doc/screenshots/HLD.png)
 
 ### Componentes:
 
