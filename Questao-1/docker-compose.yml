@@ -1,0 +1,55 @@
+services:
+  influxdb:
+    image: influxdb:1.12
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=monitoring
+    networks:
+      - monitor-net
+
+  grafana:
+    build: ./grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - influxdb
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - monitor-net
+
+
+  #grafana:
+  #  image: grafana/grafana:main-ubuntu
+  #  container_name: grafana
+  #  ports:
+  #    - "3000:3000"
+  #  depends_on:
+  #    - influxdb
+  #  volumes:
+  #    - grafana_data:/var/lib/grafana
+  # networks:
+  #   - monitor-net
+
+  agent:
+    build: ./agent
+    container_name: web-monitor-agent
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+    # aumenta limites se necessário
+    networks:
+      - monitor-net
+
+volumes:
+  influxdb_data:
+  grafana_data:
+
+networks:
+  monitor-net:
+    driver: bridge

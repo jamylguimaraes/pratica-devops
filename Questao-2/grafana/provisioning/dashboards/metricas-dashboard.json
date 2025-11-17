@@ -1,0 +1,46 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "viaipe-metricas",
+    "title": "ViaIpe - Métricas Consolidadas",
+    "panels": [
+      {
+        "type": "table",
+        "title": "Métricas por Cliente",
+        "gridPos": {"x":0,"y":0,"w":24,"h":8},
+        "targets": [
+          {
+            "format":"table",
+            "datasource": "PostgreSQL",
+            "rawSql": "SELECT cliente_name, disponibilidade, consumo_medio_in, consumo_medio_out, qualidade, calculado_em FROM metricas ORDER BY calculado_em DESC LIMIT 200"
+          }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Consumo Médio (out)",
+        "gridPos": {"x":0,"y":8,"w":12,"h":8},
+        "targets": [
+          {
+            "datasource": "PostgreSQL",
+            "rawSql": "SELECT calculado_em AS time, consumo_medio_out AS value, cliente_name AS metric FROM metricas ORDER BY calculado_em"
+          }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Qualidade",
+        "gridPos": {"x":12,"y":8,"w":12,"h":8},
+        "targets": [
+          {
+            "datasource": "PostgreSQL",
+            "rawSql": "SELECT calculado_em AS time, qualidade AS value, cliente_name AS metric FROM metricas ORDER BY calculado_em"
+          }
+        ]
+      }
+    ],
+    "schemaVersion": 27,
+    "version": 1
+  },
+  "overwrite": true
+}

@@ -1,0 +1,41 @@
+services:
+  influxdb:
+    image: influxdb:1.12
+    container_name: influxdb-viaipe
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=viaipe
+    networks:
+      - monitor-net
+
+  grafana:
+    build: ./grafana
+    container_name: grafana-collector
+    ports:
+      - "3000:3000"
+    depends_on:
+      - influxdb
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - monitor-net
+
+  collector:
+    build: ./collector
+    container_name: api-collector
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+    networks:
+      - monitor-net
+    
+volumes:
+  influxdb_data:
+  grafana_data:
+
+networks:
+  monitor-net:
+    driver: bridge

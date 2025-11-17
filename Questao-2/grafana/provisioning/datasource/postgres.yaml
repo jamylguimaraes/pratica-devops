@@ -1,0 +1,15 @@
+apiVersion: 1
+
+datasources:
+  - name: PostgreSQL
+    type: postgres
+    access: proxy
+    url: http://postgres:5432
+    database: viaipe
+    user: postgres
+    secureJsonData:
+      password: postgres
+    isDefault: true
+    editable: true
+    jsonData:
+      sslmode: disable
