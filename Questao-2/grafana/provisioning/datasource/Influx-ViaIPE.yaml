@@ -1,0 +1,12 @@
+apiVersion: 1
+
+datasources:
+  - name: Influx-ViaIPE
+    type: influxdb
+    url: http://influxdb-viaipe:8086
+    database: viaipe
+    isDefault: true
+    editable: true
+    jsonData:
+      httpMode: GET
+      queryType: influxql
