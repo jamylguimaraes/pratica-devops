@@ -13,7 +13,8 @@ Repositório: https://github.com/jamylguimaraes/pratica-devops/Questao-2/
 4. Componentes do Sistema
 5. Docker Compose
 6. Execução do Projeto
-7. Melhorias Futuras
+7. Prints
+8. Melhorias Futuras
 
 
 ---
@@ -29,13 +30,26 @@ Toda a solução é orquestrada por Docker Compose, seguindo boas práticas de s
 
 ## 2. Arquitetura (HLD)
 
-```mermaid
-flowchart LR
-    A[ViaIPE API] --> B[Collector (Python)]
-    B --> C[(InfluxDB 1.x)]
-    C --> D[Grafana]
-    D --> User[Equipe de Monitoramento]
-````
++-------------------+        +-------------------+        +-----------------------+
+| ViaIPE API        | -----> | Collector (Python)| -----> | InfluxDB 1.x (TS DB)  |
+| (Consulta LAT/UP) |        | (Agente de Coleta)|        | (Armazenamento Métr.) |
++-------------------+        +-------------------+        +-----------------------+
+                                     |                           ^
+                                     |                           |
+                                     |                           |
+                                     +---------(internet)--------+
+                                             Métricas / POST
+
+                          +-------------------+
+                          | Grafana (UI)      |
+                          | Dashboards / Alerta|
+                          +-------------------+
+                                   |
+                                   v
+                      +-----------------------------+
+                      | Equipe de Monitoramento     |
+                      | (Visualização & Ação)       |
+                      +-----------------------------+
 
 ### Componentes:
 
@@ -140,8 +154,12 @@ docker-compose up
 
 5. O dashboard está disponível em: `Dashboard > Collections DashBoard.`
 
+## 7. Prints 
 
-## 7. Melhorias Futuras
+Anexei capturas de telas locais em  `docs/screenshots/` 
+
+
+## 8. Melhorias Futuras
 
 * Alerts no Grafana para latência e perdas críticas
 * Implementar logs estruturados no collector
