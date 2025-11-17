@@ -39,7 +39,6 @@ Toda a solução é orquestrada por Docker Compose, seguindo boas práticas de s
                                      |                           |
                                      +---------(internet)--------+
                                              Métricas / POST
-
                           +-------------------+
                           | Grafana (UI)      |
                           | Dashboards / Alerta|
