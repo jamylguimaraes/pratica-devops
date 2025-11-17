@@ -3,10 +3,20 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "adztgtm",
+    "namespace": "default",
+    "uid": "QfSO982NyYsoLJF3UBZoqd6l2hnIbXRJLLwpf6RZOpAX",
+    "resourceVersion": "1",
     "generation": 1,
     "creationTimestamp": "2025-11-17T11:21:45Z",
-    "labels": {},
-    "annotations": {}
+    "labels": {
+      "grafana.app/deprecatedInternalID": "2"
+    },
+    "annotations": {
+      "grafana.app/createdBy": "user:ff4e2jav2q9dsd",
+      "grafana.app/updatedBy": "user:ff4e2jav2q9dsd",
+      "grafana.app/updatedTimestamp": "2025-11-17T11:21:45Z",
+      "grafana.app/folder": ""
+    }
   },
   "spec": {
     "annotations": [
