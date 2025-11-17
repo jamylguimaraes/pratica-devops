@@ -29,7 +29,7 @@ Toda a solução é orquestrada por Docker Compose, seguindo boas práticas de s
 
 
 ## 2. Arquitetura (HLD)
-
+'''
 +-------------------+        +-------------------+        +-----------------------+
 | ViaIPE API        | -----> | Collector (Python)| -----> | InfluxDB 1.x (TS DB)  |
 | (Consulta LAT/UP) |        | (Agente de Coleta)|        | (Armazenamento Métr.) |
@@ -49,6 +49,7 @@ Toda a solução é orquestrada por Docker Compose, seguindo boas práticas de s
                       | Equipe de Monitoramento     |
                       | (Visualização & Ação)       |
                       +-----------------------------+
+'''
 
 ### Componentes:
 
