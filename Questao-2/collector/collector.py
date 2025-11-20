@@ -2,7 +2,7 @@
 import os
 import requests
 import time
-from influxdb import InfluxDBClient
+from influxdb import InfluxDBClient # type: ignore
 import logging
 
 API_URL = os.environ.get("VIAIPE_API_URL", "https://legadoviaipe.rnp.br/api/norte")
@@ -23,16 +23,23 @@ logging.basicConfig(
 # Conectar ao InfluxDB 1.x
 # -----------------------------------------
 def connect_influx():
-    client = InfluxDBClient(
-        host=INFLUX_HOST,
-        port=INFLUX_PORT,
-        username=INFLUX_USER,
-        password=INFLUX_PASS
-    )
-    client.create_database(INFLUX_DB)
-    client.switch_database(INFLUX_DB)
-    logging.info("Conectado ao InfluxDB (1.x).")
-    return client
+    try:
+        client = InfluxDBClient(
+            host=INFLUX_HOST,
+            port=INFLUX_PORT,
+            username=INFLUX_USER,
+            password=INFLUX_PASS
+        )
+        databases = client.get_list_database()
+        if not any(db['name'] == INFLUX_DB for db in databases):
+            client.create_database(INFLUX_DB)
+        client.switch_database(INFLUX_DB)
+        logging.info("Conectado ao InfluxDB (1.x).")
+        return client
+    except Exception as e:
+        logging.error(f"Erro ao conectar ao InfluxDB: {e}")
+        return None
+ 
 
 # -----------------------------------------
 # Coleta da API ViaIPE
@@ -146,10 +153,16 @@ def main():
     while True:
         dados = coletar_viaipe()
         if dados:
-            processar_e_inserir(client, dados)
-
+            if client is not None:
+                processar_e_inserir(client, dados)
+            else:
+                logging.warning("Não foi possível conectar ao InfluxDB. Tentando novamente em 10 segundos...")
+                time.sleep(10)
+                client = connect_influx()
+        else:
+            logging.warning("Não foram encontrados dados na API ViaIPE. Tentando novamente em 10 segundos...")
+            time.sleep(10)
         time.sleep(SLEEP_SECONDS)
-
 
 if __name__ == "__main__":
     main()

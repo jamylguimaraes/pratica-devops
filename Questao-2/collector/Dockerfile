@@ -9,6 +9,6 @@ COPY collector.py /app/collector.py
 
 ENV PYTHONUNBUFFERED=1
 ENV VIAIPE_API_URL="https://legadoviaipe.rnp.br/api/norte"
-ENV COLLECT_INTERVAL=60 
+ENV COLLECT_INTERVAL=120
 
 CMD ["python", "collector.py"]

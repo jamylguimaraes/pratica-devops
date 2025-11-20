@@ -71,7 +71,7 @@
                             "type": "fill"
                           }
                         ],
-                        "measurement": "web_monitor",
+                        "measurement": "viaipe_metrics",
                         "orderByTime": "ASC",
                         "policy": "default",
                         "query": "SELECT last(\"latency\") AS latency\nFROM \"viaipe_metrics\"\nWHERE $timeFilter\nGROUP BY \"client_name\"\n",
@@ -274,7 +274,7 @@
                             "type": "fill"
                           }
                         ],
-                        "measurement": "web_monitor",
+                        "measurement": "viaipe_metrics",
                         "orderByTime": "ASC",
                         "policy": "default",
                         "query": "SELECT last(\"latency_max\") AS latency_max\nFROM \"viaipe_metrics\"\nWHERE $timeFilter\nGROUP BY \"client_name\"\n",
@@ -792,7 +792,7 @@
       "timezone": "browser",
       "to": "now"
     },
-    "title": "Collector Dashboard 2",
+    "title": "Collector Dashboard",
     "variables": []
   },
   "status": {}

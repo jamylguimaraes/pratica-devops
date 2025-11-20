@@ -23,7 +23,7 @@ Repositório: https://github.com/jamylguimaraes/pratica-devops/Questao-2/
 
 ## 1. Visão Geral
 
-Este projeto realiza a coleta de métricas operacionais de clientes da API ViaIPE (RNP) e armazena os dados em um banco de séries temporais (InfluxDB 1.x). As métricas coletadas são exibidas em dashboards no Grafana para auxiliar no monitoramento de disponibilidade, latência, tráfego e qualidade de conexão dos clientes.
+Este projeto realiza a coleta de métricas operacionais dos clientes da API ViaIPE (RNP) e armazena esses dados em um banco de séries temporais (InfluxDB 1.x). As métricas coletadas são exibidas em dashboards no Grafana, permitindo o monitoramento de disponibilidade, latência, tráfego e qualidade de conexão dos clientes.
 
 Toda a solução é orquestrada por Docker Compose, seguindo boas práticas de separação de responsabilidades e execução em containers dedicados.
 
@@ -68,7 +68,7 @@ Responsável por:
 * Preparar o payload de envio ao InfluxDB.
 * Enviar os pontos de medição para a base.
 
-O código completo está em: `collector/collector.py`
+O código completo está em: `collector/collector.py` 
 
 ### **InfluxDB 1.x**
 
@@ -119,13 +119,13 @@ git clone https://github.com/jamylguimaraes/pratica-devops
 cd pratica-devops/Questao-2/
 ```
 
-2. Inicie a construção com o Docker Compose:
+2. Construção com o Docker Compose:
 
 ```bash
 docker-compose build --no-cache
 ```
 
-3. Execute a inicialização(UP) do ambiente:
+3. Inicialização(UP) do ambiente:
 
 ```bash
 docker-compose up
@@ -137,14 +137,13 @@ docker-compose up
 
 ## 7. Prints 
 
-Anexei capturas de telas locais em  `docs/screenshots/` 
+Anexei capturas de telas locais em  [docs/screenshots/](https://github.com/jamylguimaraes/pratica-devops/blob/main/Questao-2/doc/screenshots/)
 
 
 ## 8. Melhorias Futuras
 
-* Alerts no Grafana para latência e perdas críticas
 * Implementar logs estruturados no collector
 * Adicionar retentativas e tolerância a falhas
-* Suporte a múltiplas regiões da API ViaIPE
+* Implementar alertas no Grafana para latência e perdas críticas
 
 

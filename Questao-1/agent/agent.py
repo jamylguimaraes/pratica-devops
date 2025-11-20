@@ -15,31 +15,36 @@ TARGETS = [
     {"name": "rnp", "host": "rnp.br", "url": "https://www.rnp.br"},
 ]
 
+# -----------------------------------------
+# Executa ping e HTTP checks,
+# retorna métricas rtt_ms (float), packet_loss_pct (float)
+# -----------------------------------------
 def run_ping(host, count=4, timeout=10):
-    """Return (avg_rtt_ms (float) or None, packet_loss_pct (float) or None)"""
     try:
         proc = subprocess.run(["ping", "-c", str(count), host],
                               capture_output=True, text=True, timeout=timeout)
         out = proc.stdout
         loss = None
         rtt = None
-        # packet loss: look for 'X% packet loss' pattern
+        # packet loss: look for 'X% packet loss'
         m = re.search(r"(\d+(?:\.\d+)?)% packet loss", out)
         if m:
             loss = float(m.group(1))
-        # rtt line: rtt min/avg/max/mdev = 13.123/13.456/13.789/0.123 ms
         m2 = re.search(r"rtt .* = ([\d\.]+)/([\d\.]+)/([\d\.]+)/([\d\.]+)", out)
         if m2:
             try:
-                rtt = float(m2.group(2))  # avg in ms
+                rtt = float(m2.group(2)) 
             except:
                 rtt = None
         return rtt, loss
     except Exception:
         return None, None
 
+# -----------------------------------------
+# Executa http checks
+# retorna status_code (int), load_time_ms (int)
+# -----------------------------------------
 def run_http(url, timeout=15):
-    """Return (status_code int or None, load_time_ms int or None)"""
     try:
         r = requests.get(url, timeout=timeout)
         elapsed_ms = int(r.elapsed.total_seconds() * 1000)
@@ -47,23 +52,22 @@ def run_http(url, timeout=15):
     except Exception:
         return None, None
 
+# -----------------------------------------
+# Cria linha no formato line protocol do InfluxDB
+# integers devem ter sufixo i, strings entre aspas
+# -----------------------------------------
 def line_protocol(measurement, tags, fields, timestamp=None):
-    """
-    Build InfluxDB line protocol string.
-    Integers must be suffixed with i. Strings quoted.
-    """
+    
     tagset = ",".join([f"{k}={v}" for k, v in tags.items()])
     fpairs = []
     for k, v in fields.items():
         if isinstance(v, int):
             fpairs.append(f"{k}={v}i")
         elif isinstance(v, float):
-            # ensure float has decimal
             fpairs.append(f"{k}={v}")
         elif isinstance(v, str):
             fpairs.append(f'{k}="{v}"')
         else:
-            # fallback to string
             fpairs.append(f'{k}="{v}"')
     fieldset = ",".join(fpairs)
     if tagset:
@@ -74,15 +78,19 @@ def line_protocol(measurement, tags, fields, timestamp=None):
         line = f"{line} {timestamp}"
     return line
 
+# -----------------------------------------
+# Escreve linha no InfluxDB
+# -----------------------------------------
 def write_influx(line):
     try:
         requests.post(INFLUX_URL, data=line, timeout=5)
     except Exception as e:
-        # Errors but print for debugging
         print(f"[WARN] failed write to influx: {e}")
 
+# -----------------------------------------
+# Espera inicial para startup
+# -----------------------------------------
 def wait_startup():
-    # small startup wait so influx can bind
     print("Agent starting, waiting a few seconds for services...")
     time.sleep(8)
 
