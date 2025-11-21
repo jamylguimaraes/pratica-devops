@@ -18,6 +18,11 @@ Realiza a coleta de métricas operacionais dos clientes da API ViaIPE (RNP) e ar
 
 ## Outros projetos:
 
+[https://github.com/jamylguimaraes/iac-aws-ecs-python-app](https://github.com/jamylguimaraes/iac-aws-ecs-python-app)
+
+Repositorio com projeto de infraestrutura na aws, com uso de ECS entre outros serviços para uma aplicação em Python
+
+
 [https://github.com/jamylguimaraes/Python-flask-app-Docker](https://github.com/jamylguimaraes/Python-flask-app-Docker)
 
 Aplicação web dockerizada, escrita em Python 3/Flask, utilizando Gunicorn como web server. Emprega CI/CD com GitHub Actions, Azure Web App, Azure Container Registry e infraestrutura provisionada com Terraform.
