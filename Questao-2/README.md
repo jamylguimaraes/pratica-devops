@@ -30,7 +30,7 @@ Toda a solução é orquestrada por Docker Compose, seguindo boas práticas de s
 
 ## 2. Arquitetura (HLD)
 
-![HDL](https://github.com/jamylguimaraes/pratica-devops/blob/main/Questao-2/doc/screenshots/HLD.png)
+![HDL](doc/screenshots/HLD.png)
 
 ### Componentes:
 
